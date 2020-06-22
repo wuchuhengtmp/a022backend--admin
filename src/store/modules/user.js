@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, updateUserLevel } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -6,7 +6,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+
   }
 }
 
@@ -24,6 +25,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_USERLEVEL_LIST: (state, userLeveList) => {
+    state.userleveList = userLeveList
   }
 }
 
@@ -54,7 +58,6 @@ const actions = {
         }
 
         const { username, avator } = data
-        debugger
         commit('SET_NAME', username)
         commit('SET_AVATAR', avator)
         resolve(data)
