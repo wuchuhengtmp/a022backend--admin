@@ -1,8 +1,6 @@
-import { login, logout, getInfo, getUserList, topUp, deleteRequest, update } from '@/api/user'
+import { login, logout, getInfo, getUserList, topUp, deleteRequest, update, userLevelUpgrade } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-import ua from "element-ui/src/locale/lang/ua";
-import user from "../../../mock/user";
 
 const getDefaultState = () => {
   return {
@@ -150,9 +148,26 @@ const actions = {
         state.userList[index].address = userInfo.address
         resolve()
       }).catch(error=> {
-        resolve(error)
+        reject(error)
       })
     })
+  },
+  // 会员升级
+  userLevelUpgrade({ commit, state }, userInfo) {
+    return new Promise((resolve, reject) => {
+      userLevelUpgrade(userInfo).then(res => {
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // 更新用户等级
+  updateUserLevel({ commit, state }, userInfo) {
+    const index = state.userList.findIndex(v => v.id === userInfo.id)
+    state.userList[index]['userlevel'] = userInfo.levelName
+    state.userList[index]['user_level_id'] = userInfo. userLevelId
+    commit('SET_USER_LIST', state.userList);
   }
 }
 

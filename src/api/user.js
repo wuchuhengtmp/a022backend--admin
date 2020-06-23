@@ -62,3 +62,11 @@ export function update(userInfo) {
   })
 }
 
+// 更新用户等级
+export  function userLevelUpgrade(userInfo) {
+  return request({
+    url: `users/${userInfo.id}/userLevel?user_level_id=${userInfo.user_level_id}`,
+    method: 'patch'
+  })
+}
+

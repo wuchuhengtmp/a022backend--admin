@@ -106,13 +106,19 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="操作" width="250">
+      <el-table-column align="center" prop="created_at" label="操作" width="450">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="topUpHandle(scope.row)" plain>
             充值
           </el-button>
           <el-button type="success" size="mini" @click="editHandle(scope.row)" plain>
             编辑
+          </el-button>
+          <el-button type="info" size="mini" @click="userLevelUpgradeHandle(scope.row)" plain>
+            会员升级
+          </el-button>
+          <el-button type="warning" size="mini" @click="editHandle(scope.row)" plain>
+            工会升级
           </el-button>
           <el-button type="danger" size="mini" @click="deleteHandle(scope.row)" plain>
             删除
@@ -179,12 +185,44 @@
       </div>
     </el-dialog>
     <!--   编辑 end-->
+    <!-- 会员升级 start -->
+    <el-dialog
+      title="会员升级"
+      :visible.sync="upgradeLevelDialogVisible"
+      width="30%"
+      center>
+      <el-form
+        :rules="rules"
+        :model="temp"
+        ref="userEditForm"
+        label-position="left"
+        label-width="70px" >
+        <el-form-item label="会员等级">
+          <el-select v-model="temp.user_level_id"
+                     placeholder="选择会员等级"
+                     clearable class="filter-item"
+                     @change="userLevelChange"
+                     style="width: 130px">
+            <el-option v-for="item in userLevelList" :label="item.level_name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer el-dialog--center">
+        <el-button type="primary" @click="userLevelUpgrade">
+          确认
+        </el-button>
+      </div>
+    </el-dialog>
+  <!-- 会员升级 end -->
   </div>
 </template>
 
 <script>
 import {mapGetters} from "vuex"
 export default {
+  created() {
+    this.$store.dispatch('userLevel/getUserLevelList')
+  },
   data() {
     function checkPhone(rule, value, callback) {
       const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
@@ -196,6 +234,7 @@ export default {
       }
     }
     return {
+      upgradeLevelDialogVisible: false,
       listLoading: false,
       deleteDialogVisible: false,
       editDialogVisible: false,
@@ -225,7 +264,8 @@ export default {
     ...mapGetters([
       'userList',
       'userListTotal',
-      'uionLevelList'
+      'uionLevelList',
+      'userLevelList'
     ])
   },
   mounted() {
@@ -288,6 +328,31 @@ export default {
         }
       })
     },
+    userLevelUpgradeHandle(row) {
+      this.temp.user_level_id = row.user_level_id
+      this.temp.id = row.id
+      if (this.userLevelList.length === 0 ) {
+        this.$store.dispatch('userLevel/getUserLevelList').then(() => {
+          this.upgradeLevelDialogVisible = true
+        })
+      } else {
+        this.upgradeLevelDialogVisible = true
+      }
+    },
+    userLevelChange(value) {
+      this.temp.user_level_id = value
+    },
+    userLevelUpgrade()
+    {
+      const { id, user_level_id } = this.temp
+      this.$store.dispatch('user/userLevelUpgrade', { id, user_level_id }).then(() => {
+        const levelIndex = this.userLevelList.findIndex(v => v.id === this.temp.user_level_id)
+        const levelname = this.userLevelList[levelIndex].level_name
+        // 更新当条用户信息
+        this.$store.dispatch('user/updateUserLevel', {id: this.temp.id, levelName: levelname, userLevelId: this.temp.user_level_id })
+        this.upgradeLevelDialogVisible = false
+      })
+    }
   }
 }
 </script>

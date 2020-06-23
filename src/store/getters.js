@@ -6,6 +6,7 @@ const getters = {
   name: state => state.user.name,
   goodsList: state => state.goods.goodsList,
   userLevelList: state => state.userLevel.userLevelList,
+  userLevelTotal: state => state.userLevel.userLevelTotal,
   userList: state => state.user.userList,
   userListTotal: state => state.user.userListTotal,
   uionLevelList: state => state.unionLevel.unionLevelList

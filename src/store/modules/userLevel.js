@@ -3,7 +3,8 @@ import {updateUserLevel} from "@/api/user";
 
 const getDefaultState = () => {
   return {
-    userLevelList: []
+    userLevelList: [],
+    userLevelTotal: 0
   }
 }
 
@@ -15,6 +16,9 @@ const mutations = {
   },
   SET_USER_LEVEL_LIST: (state, userLeveList) => {
     state.userLevelList = userLeveList
+  },
+  SET_USER_LEVEL_TOTAL: (state, userLevelTotal) => {
+    state.userLevelTotal = userLevelTotal
   }
 }
 
@@ -24,7 +28,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       getUserLevelList().then(response => {
         const {data} = response
-        commit('SET_USER_LEVEL_LIST', data)
+        commit('SET_USER_LEVEL_LIST', data.items)
+        commit('SET_USER_LEVEL_TOTAL', data.total)
         resolve()
       }).catch(error => {
         reject(error)
