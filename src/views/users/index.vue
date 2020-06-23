@@ -8,8 +8,6 @@
       fit
       highlight-current-row
     >
-
-
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -34,11 +32,6 @@
           {{ scope.row.phone }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用户手机" width="130">
-        <template slot-scope="scope">
-          {{ scope.row.phone }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="余额" width="130">
         <template slot-scope="scope">
           {{ scope.row.coint }}
@@ -54,15 +47,12 @@
           {{ scope.row.alipay }}
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="实名状态" width="130">
+      <el-table-column align="center" label="实名状态" width="100">
         <template slot-scope="scope" >
           {{ scope.row.certification_msg }}
         </template>
       </el-table-column>
-
-
-      <el-table-column align="center" label="信誉分" width="100">
+      <el-table-column align="center" label="信誉分" width="80">
         <template slot-scope="scope">
           {{ scope.row.credit }}
         </template>
@@ -82,7 +72,7 @@
           {{ scope.row.created_at }}
         </template>
       </el-table-column>
-      <el-table-column type="expand" label="更多">
+      <el-table-column type="expand" label="更多" width="50">
         <template slot-scope="scope">
           <el-form  inline >
             <el-form-item label="真实姓名">
@@ -121,8 +111,8 @@
           <el-button type="primary" size="mini" @click="topUpHandle(scope.row)" plain>
             充值
           </el-button>
-          <el-button type="success" size="mini" @click="handleUpdate(scope.row)" plain>
-            充值
+          <el-button type="success" size="mini" @click="editHandle(scope.row)" plain>
+            编辑
           </el-button>
           <el-button type="danger" size="mini" @click="deleteHandle(scope.row)" plain>
             删除
@@ -130,7 +120,6 @@
         </template>
       </el-table-column>
     </el-table>
-
   <!--充值界面 start -->
     <el-dialog title="充值" :visible.sync="topUpFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
@@ -145,7 +134,6 @@
       </div>
     </el-dialog>
   <!--充值界面 end -->
-
   <!-- 删除弹框 start-->
     <el-dialog
         title="删除"
@@ -159,29 +147,85 @@
     </span>
     </el-dialog>
   <!-- 删除弹框 start-->
+  <!--   编辑 start-->
+    <el-dialog
+      title="编辑"
+      :visible.sync="editDialogVisible"
+      width="30%"
+      center>
+      <el-form
+        :rules="rules"
+        :model="temp"
+        ref="userEditForm"
+        label-position="left"
+        label-width="70px" >
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="temp.phone" />
+        </el-form-item>
+        <el-form-item label="支付宝">
+          <el-input v-model="temp.alipay" />
+        </el-form-item>
+        <el-form-item label="信誉分">
+          <el-input v-model="temp.credit" />
+        </el-form-item>
+        <el-form-item label="地址">
+          <el-input v-model="temp.address" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer el-dialog--center">
+        <el-button type="primary" @click="edit">
+          确认
+        </el-button>
+      </div>
+    </el-dialog>
+    <!--   编辑 end-->
   </div>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-
+import {mapGetters} from "vuex"
 export default {
   data() {
+    function checkPhone(rule, value, callback) {
+      const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+      console.log(reg.test(value));
+      if (reg.test(value)) {
+        callback();
+      } else {
+        return callback(new Error('请输入正确的手机号'));
+      }
+    }
     return {
       listLoading: false,
       deleteDialogVisible: false,
+      editDialogVisible: false,
       topUpFormVisible: false,
       temp: {
         id: undefined,
         coint: undefined,
-        topUp: 0
+        topUp: 0,
+        acitves: 0,
+        address: undefined,
+        alipay: undefined,
+        bank: undefined,
+        bank_name: undefined,
+        certification_status: undefined,
+        credit: undefined,
+        union_level_id: undefined,
+        user_level_id: undefined,
+        username: undefined,
+        virtual_purse: undefined
+      },
+      rules: {
+        phone: [{ trigger: 'change', validator: checkPhone }]
       }
     }
   },
   computed: {
     ...mapGetters([
       'userList',
-      'userListTotal'
+      'userListTotal',
+      'uionLevelList'
     ])
   },
   mounted() {
@@ -190,9 +234,6 @@ export default {
     })
   },
   methods: {
-    handleUpdate(row) {
-      debugger
-    },
     topUpHandle(row) {
       this.temp.id = row.id
       this.topUpFormVisible = true
@@ -224,7 +265,29 @@ export default {
           duration: 2000
         })
       })
-    }
+    },
+    editHandle(row) {
+      this.temp = row
+      this.editDialogVisible = true
+    },
+    edit() {
+      this.$refs.userEditForm.validate(valid => {
+        if (valid) {
+          const { id, username, phone, alipay, credit, address } = this.temp
+          this.$store.dispatch('user/update', { id, username, phone, alipay, credit, address }).then(() => {
+            this.editDialogVisible = false
+            this.$notify({
+              title: '成功',
+              message: '编辑成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        } else {
+          return false
+        }
+      })
+    },
   }
 }
 </script>

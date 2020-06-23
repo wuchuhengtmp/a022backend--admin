@@ -192,6 +192,13 @@ export default {
           })
         }
       })
+    },
+    /**
+     *  获取商品列表
+     * @returns {Promise<any>}
+     */
+    getGoodsList() {
+      return this.$store.dispatch('goods/getGoodsList')
     }
   }
 }

@@ -52,3 +52,13 @@ export function deleteRequest(id) {
   })
 }
 
+// 更新基本信息
+export function update(userInfo) {
+  const query= Object.assign({}, userInfo)
+  delete query.id
+  return request({
+    url: `users/${userInfo.id}?${qs.stringify(query)}`,
+    method: 'put'
+  })
+}
+
