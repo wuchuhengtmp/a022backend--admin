@@ -69,6 +69,12 @@ export const constantRoutes = [
         meta: { title: '会员等级', icon: 'level' }
       },
       {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/users/index'),
+        meta: { title: '会员列表', icon: 'user' }
+      },
+      {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),

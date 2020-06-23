@@ -1,4 +1,4 @@
-import { login, logout, getInfo, updateUserLevel } from '@/api/user'
+import { login, logout, getInfo, getUserList, topUp } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -7,7 +7,8 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-
+    userList: [],
+    userListTotal: 0
   }
 }
 
@@ -26,8 +27,11 @@ const mutations = {
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   },
-  SET_USERLEVEL_LIST: (state, userLeveList) => {
-    state.userleveList = userLeveList
+  SET_USER_LIST: (state, userList) => {
+    state.userList = userList
+  },
+  SET_USER_LIST_TOTAL: (state, userListTotal) => {
+    state.userListTotal = userListTotal
   }
 }
 
@@ -88,7 +92,36 @@ const actions = {
       commit('RESET_STATE')
       resolve()
     })
-  }
+  },
+
+  //  用户列表
+  getUserList({ commit, state }, query) {
+    return new Promise((resolve, reject) => {
+      getUserList(query).then((res) => {
+        const { data, msg, code} = res
+        commit('SET_USER_LIST', data.items)
+        commit('SET_USER_LIST_TOTAL', data.total)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // 用户充值
+ topUp({ commit, state }, topUpInfo) {
+   return new Promise((resolve, reject) => {
+       topUp(topUpInfo).then( res => {
+         const index = state.userList.findIndex( v=> v.id === topUpInfo.id)
+         const userList = state.userList ;
+         userList[index].coint += topUpInfo.topUp
+         commit('SET_USER_LIST', userList)
+         resolve()
+       }).catch(error => {
+         reject(error)
+       })
+    })
+ }
 }
 
 export default {

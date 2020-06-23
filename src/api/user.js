@@ -29,3 +29,18 @@ export function updateUserLevel(userLevelInfo) {
     method: 'put',
   })
 }
+
+// 用户等级列表
+export function getUserList(query) {
+  return request({
+    url: `/users?${qs.stringify(query)}`,
+    method: 'get'
+  })
+}
+// 用户充值
+export function topUp(topUpInfo) {
+  return request({
+    url: `/users/${topUpInfo.id}/coint?topUp=${topUpInfo.topUp}`,
+    method: 'patch'
+  })
+}
