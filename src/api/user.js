@@ -44,3 +44,11 @@ export function topUp(topUpInfo) {
     method: 'patch'
   })
 }
+
+export function deleteRequest(id) {
+  return request({
+    url: `users/${id}`,
+    method: 'delete'
+  })
+}
+

@@ -124,7 +124,7 @@
           <el-button type="success" size="mini" @click="handleUpdate(scope.row)" plain>
             充值
           </el-button>
-          <el-button type="danger" size="mini" @click="handleUpdate(scope.row)" plain>
+          <el-button type="danger" size="mini" @click="deleteHandle(scope.row)" plain>
             删除
           </el-button>
         </template>
@@ -145,6 +145,20 @@
       </div>
     </el-dialog>
   <!--充值界面 end -->
+
+  <!-- 删除弹框 start-->
+    <el-dialog
+        title="删除"
+        :visible.sync="deleteDialogVisible"
+        width="30%"
+        center>
+        <span>您正在执行删除数据操作，是否继续?</span>
+        <span slot="footer" class="dialog-footer">
+      <el-button @click="deleteDialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="deleteAction">确 定</el-button>
+    </span>
+    </el-dialog>
+  <!-- 删除弹框 start-->
   </div>
 </template>
 
@@ -155,6 +169,7 @@ export default {
   data() {
     return {
       listLoading: false,
+      deleteDialogVisible: false,
       topUpFormVisible: false,
       temp: {
         id: undefined,
@@ -189,6 +204,22 @@ export default {
         this.$notify({
           title: '成功',
           message: '充值成功',
+          type: 'success',
+          duration: 2000
+        })
+      })
+    },
+    deleteHandle(row) {
+      this.temp.id = row.id
+      this.deleteDialogVisible = true
+    },
+    deleteAction()
+    {
+      this.deleteDialogVisible = false
+      this.$store.dispatch('user/delete', this.temp.id).then(() => {
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
           type: 'success',
           duration: 2000
         })

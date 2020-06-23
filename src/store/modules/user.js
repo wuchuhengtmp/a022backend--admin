@@ -1,4 +1,4 @@
-import { login, logout, getInfo, getUserList, topUp } from '@/api/user'
+import { login, logout, getInfo, getUserList, topUp, deleteRequest } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -121,7 +121,21 @@ const actions = {
          reject(error)
        })
     })
- }
+ },
+
+  // 删除
+  delete({ commit, state }, id) {
+      return new Promise((resolve, reject) => {
+        deleteRequest(id).then(res => {
+          const index = state.userList.findIndex(v => v.id === id)
+          delete state.userList[index]
+          commit('SET_USER_LIST_TOTAL', state.userList)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+  }
 }
 
 export default {
