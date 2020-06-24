@@ -63,9 +63,16 @@ export function update(userInfo) {
 }
 
 // 更新用户等级
-export  function userLevelUpgrade(userInfo) {
+export function userLevelUpgrade(userInfo) {
   return request({
     url: `users/${userInfo.id}/userLevel?user_level_id=${userInfo.user_level_id}`,
+    method: 'patch'
+  })
+}
+// 用户工会等级升级
+export function uionLevelUpgrade(uionLevelInfo) {
+  return request({
+    url: `users/${uionLevelInfo.id}/unionLevel?union_level_id=${uionLevelInfo.unionLevelId}`,
     method: 'patch'
   })
 }

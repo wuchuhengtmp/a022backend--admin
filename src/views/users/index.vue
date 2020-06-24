@@ -117,7 +117,7 @@
           <el-button type="info" size="mini" @click="userLevelUpgradeHandle(scope.row)" plain>
             会员升级
           </el-button>
-          <el-button type="warning" size="mini" @click="editHandle(scope.row)" plain>
+          <el-button type="warning" size="mini" @click="unionLevelUpgradeHandle(scope.row)" plain>
             工会升级
           </el-button>
           <el-button type="danger" size="mini" @click="deleteHandle(scope.row)" plain>
@@ -126,7 +126,7 @@
         </template>
       </el-table-column>
     </el-table>
-  <!--充值界面 start -->
+    <!--充值界面 start -->
     <el-dialog title="充值" :visible.sync="topUpFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="金额">
@@ -139,8 +139,8 @@
         </el-button>
       </div>
     </el-dialog>
-  <!--充值界面 end -->
-  <!-- 删除弹框 start-->
+    <!--充值界面 end -->
+    <!-- 删除弹框 start-->
     <el-dialog
         title="删除"
         :visible.sync="deleteDialogVisible"
@@ -152,8 +152,8 @@
       <el-button type="primary" @click="deleteAction">确 定</el-button>
     </span>
     </el-dialog>
-  <!-- 删除弹框 start-->
-  <!--   编辑 start-->
+    <!-- 删除弹框 start-->
+    <!--   编辑 start-->
     <el-dialog
       title="编辑"
       :visible.sync="editDialogVisible"
@@ -187,7 +187,7 @@
     <!--   编辑 end-->
     <!-- 会员升级 start -->
     <el-dialog
-      title="会员升级"
+      :title="popupTitle"
       :visible.sync="upgradeLevelDialogVisible"
       width="30%"
       center>
@@ -213,7 +213,35 @@
         </el-button>
       </div>
     </el-dialog>
-  <!-- 会员升级 end -->
+    <!-- 会员升级 end -->
+    <!--- 工会升级 start -->
+    <el-dialog
+      title="工会升级"
+      :visible.sync="upgradeUnionLevelDialogVisible"
+      width="30%"
+      center>
+      <el-form
+        :rules="rules"
+        :model="temp"
+        ref="userEditForm"
+        label-position="left"
+        label-width="70px" >
+        <el-form-item label="工会等级">
+          <el-select v-model="temp.union_level_id"
+                     placeholder="选择会员等级"
+                     clearable class="filter-item"
+                     @change=unionLevelChange>
+            <el-option v-for="item in uionLevelList" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer el-dialog--center">
+        <el-button type="primary" @click="unionLevelUpgrad">
+          确认
+        </el-button>
+      </div>
+    </el-dialog>
+    <!--- 工会升级 end -->
   </div>
 </template>
 
@@ -234,6 +262,8 @@ export default {
       }
     }
     return {
+      popupTitle: undefined,
+      upgradeUnionLevelDialogVisible: false,
       upgradeLevelDialogVisible: false,
       listLoading: false,
       deleteDialogVisible: false,
@@ -329,6 +359,7 @@ export default {
       })
     },
     userLevelUpgradeHandle(row) {
+      this.popupTitle = '会员升级'
       this.temp.user_level_id = row.user_level_id
       this.temp.id = row.id
       if (this.userLevelList.length === 0 ) {
@@ -342,8 +373,7 @@ export default {
     userLevelChange(value) {
       this.temp.user_level_id = value
     },
-    userLevelUpgrade()
-    {
+    userLevelUpgrade() {
       const { id, user_level_id } = this.temp
       this.$store.dispatch('user/userLevelUpgrade', { id, user_level_id }).then(() => {
         const levelIndex = this.userLevelList.findIndex(v => v.id === this.temp.user_level_id)
@@ -351,6 +381,28 @@ export default {
         // 更新当条用户信息
         this.$store.dispatch('user/updateUserLevel', {id: this.temp.id, levelName: levelname, userLevelId: this.temp.user_level_id })
         this.upgradeLevelDialogVisible = false
+      })
+    },
+    unionLevelUpgradeHandle(row) {
+      this.temp.id = row.id
+      this.temp.union_level_id = row.union_level_id
+      if (this.uionLevelList.length === 0 ) {
+        this.$store.dispatch('unionLevel/getUionLevelList').then(() => {
+          this.upgradeUnionLevelDialogVisible = true
+        })
+      } else {
+        this.upgradeUnionLevelDialogVisible = true
+      }
+    },
+    unionLevelChange(value) {
+      this.temp.union_level_id = value
+    },
+    unionLevelUpgrad() {
+      const unionLevelIndex = this.uionLevelList.findIndex(v => v.id === this.temp.union_level_id)
+      const unionLevelname = this.uionLevelList[unionLevelIndex].name
+      const unionlevelInfo = {id: this.temp.id, unionLevelname : unionLevelname , unionLevelId: this.temp.union_level_id}
+      this.$store.dispatch('user/uionLevelUpgrade', unionlevelInfo).then(() => {
+        this.upgradeUnionLevelDialogVisible = false
       })
     }
   }

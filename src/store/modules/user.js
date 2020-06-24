@@ -1,4 +1,4 @@
-import { login, logout, getInfo, getUserList, topUp, deleteRequest, update, userLevelUpgrade } from '@/api/user'
+import { login, logout, getInfo, getUserList, topUp, deleteRequest, update, userLevelUpgrade, uionLevelUpgrade } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -168,6 +168,20 @@ const actions = {
     state.userList[index]['userlevel'] = userInfo.levelName
     state.userList[index]['user_level_id'] = userInfo. userLevelId
     commit('SET_USER_LIST', state.userList);
+  },
+  // 用户工会等级长级
+  uionLevelUpgrade({ commit, state }, unionLevelInfo) {
+    return new Promise((resolve, reject) => {
+      uionLevelUpgrade(unionLevelInfo).then((res) => {
+        const index = state.userList.findIndex(v => v.id === unionLevelInfo.id)
+        state.userList[index].uion_level_id = unionLevelInfo.unionLevelId
+        state.userList[index].union_level = unionLevelInfo.unionLevelname
+        commit('SET_USER_LIST', state.userList)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }
 
