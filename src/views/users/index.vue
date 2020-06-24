@@ -126,6 +126,9 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <pagination v-show="userListTotal > 0" :total="userListTotal" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
     <!--充值界面 start -->
     <el-dialog title="充值" :visible.sync="topUpFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
@@ -247,7 +250,10 @@
 
 <script>
 import {mapGetters} from "vuex"
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+
 export default {
+  components: { Pagination },
   created() {
     this.$store.dispatch('userLevel/getUserLevelList')
   },
@@ -269,6 +275,14 @@ export default {
       deleteDialogVisible: false,
       editDialogVisible: false,
       topUpFormVisible: false,
+      listQuery: {
+        page: 1,
+        limit: 10,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: '+id'
+      },
       temp: {
         id: undefined,
         coint: undefined,
@@ -299,11 +313,16 @@ export default {
     ])
   },
   mounted() {
-    this.$store.dispatch('user/getUserList').then(() => {
-      this.loading = true
-    })
+    this.getList()
   },
   methods: {
+    // 获取用户列表
+    getList() {
+      this.loading = true
+      this.$store.dispatch('user/getUserList', this.listQuery).then(() => {
+        this.loading = false
+      })
+    },
     topUpHandle(row) {
       this.temp.id = row.id
       this.topUpFormVisible = true
