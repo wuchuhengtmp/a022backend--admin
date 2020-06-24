@@ -1,5 +1,12 @@
 <template>
   <div class="app-container">
+    <div class="filter-container">
+      <el-input v-model="listQuery.username" placeholder="用户名" style="width: 200px;" class="filter-item" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        搜索
+      </el-button>
+    </div>
+
     <el-table
       v-loading="listLoading"
       :data="userList"
@@ -279,7 +286,7 @@ export default {
         page: 1,
         limit: 10,
         importance: undefined,
-        title: undefined,
+        username: undefined,
         type: undefined,
         sort: '+id'
       },
@@ -316,6 +323,11 @@ export default {
     this.getList()
   },
   methods: {
+    // 搜索
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
     // 获取用户列表
     getList() {
       this.loading = true
