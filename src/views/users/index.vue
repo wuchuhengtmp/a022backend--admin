@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="listQuery.username" placeholder="用户名" style="width: 200px;" class="filter-item" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
     </div>
@@ -262,7 +262,7 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 export default {
   components: { Pagination },
   created() {
-    this.$store.dispatch('userLevel/getUserLevelList')
+    this.getList()
   },
   data() {
     function checkPhone(rule, value, callback) {
@@ -319,9 +319,6 @@ export default {
       'userLevelList'
     ])
   },
-  mounted() {
-    this.getList()
-  },
   methods: {
     // 搜索
     handleFilter() {
@@ -331,8 +328,12 @@ export default {
     // 获取用户列表
     getList() {
       this.loading = true
-      this.$store.dispatch('user/getUserList', this.listQuery).then(() => {
-        this.loading = false
+      this.$store.dispatch('unionLevel/getUionLevelList').then(() => {
+        this.$store.dispatch('userLevel/getUserLevelList').then(() => {
+          this.$store.dispatch('user/getUserList', this.listQuery).then(() => {
+            this.loading = false
+          })
+        })
       })
     },
     topUpHandle(row) {
