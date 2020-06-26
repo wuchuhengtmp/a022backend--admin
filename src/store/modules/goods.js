@@ -1,4 +1,4 @@
-import { getGoodsList } from '@/api/goods'
+import { getGoodsList, update } from '@/api/goods'
 
 const getDefaultState = () => {
   return {
@@ -30,6 +30,17 @@ const actions = {
       })
     })
   },
+  // 编辑商品
+  update({ commit, state }, goodsInfo) {
+    return new Promise((resolve, reject) => {
+      update(goodsInfo).then((res) => {
+        const index = state.goodsList.findIndex(v => v.id === goodsInfo.id)
+        state.goodsList[index] = goodsInfo
+        commit('SET_GOODSLIST', state.goodsList)
+        resolve()
+      })
+    })
+  }
 }
 
 export default {

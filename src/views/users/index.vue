@@ -1,3 +1,4 @@
+<script src="../../api/goods.js"></script>
 <template>
   <div class="app-container">
     <div class="filter-container">
@@ -30,8 +31,8 @@
           <el-image
             style="width: 30px; height: 30px"
             :src="scope.row.avatar"
-            :preview-src-list="[scope.row.avatar]">
-          </el-image>
+            :preview-src-list="[scope.row.avatar]"
+          />
         </template>
       </el-table-column>
       <el-table-column align="center" label="用户手机" width="130">
@@ -55,7 +56,7 @@
         </template>
       </el-table-column>
       <el-table-column align="center" label="实名状态" width="100">
-        <template slot-scope="scope" >
+        <template slot-scope="scope">
           {{ scope.row.certification_msg }}
         </template>
       </el-table-column>
@@ -81,32 +82,32 @@
       </el-table-column>
       <el-table-column type="expand" label="更多" width="50">
         <template slot-scope="scope">
-          <el-form  inline >
+          <el-form inline>
             <el-form-item label="真实姓名">
               <span>{{ scope.row.real_name }}</span>
             </el-form-item>
           </el-form>
-          <el-form  inline >
+          <el-form inline>
             <el-form-item label="卡号">
               <span>{{ scope.row.bank }}</span>
             </el-form-item>
           </el-form>
-          <el-form  inline >
+          <el-form inline>
             <el-form-item label="银行">
               <span>{{ scope.row.bank_name }}</span>
             </el-form-item>
           </el-form>
-          <el-form  inline >
+          <el-form inline>
             <el-form-item label="真实姓名">
               <span>{{ scope.row.real_name }}</span>
             </el-form-item>
           </el-form>
-          <el-form  inline >
+          <el-form inline>
             <el-form-item label="地址">
               <span>{{ scope.row.address }}</span>
             </el-form-item>
           </el-form>
-          <el-form  inline >
+          <el-form inline>
             <el-form-item label="虚拟钱包">
               <span>{{ scope.row.virtual_purse }}</span>
             </el-form-item>
@@ -115,19 +116,19 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作" width="450">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="topUpHandle(scope.row)" plain>
+          <el-button type="primary" size="mini" plain @click="topUpHandle(scope.row)">
             充值
           </el-button>
-          <el-button type="success" size="mini" @click="editHandle(scope.row)" plain>
+          <el-button type="success" size="mini" plain @click="editHandle(scope.row)">
             编辑
           </el-button>
-          <el-button type="info" size="mini" @click="userLevelUpgradeHandle(scope.row)" plain>
+          <el-button type="info" size="mini" plain @click="userLevelUpgradeHandle(scope.row)">
             会员升级
           </el-button>
-          <el-button type="warning" size="mini" @click="unionLevelUpgradeHandle(scope.row)" plain>
+          <el-button type="warning" size="mini" plain @click="unionLevelUpgradeHandle(scope.row)">
             工会升级
           </el-button>
-          <el-button type="danger" size="mini" @click="deleteHandle(scope.row)" plain>
+          <el-button type="danger" size="mini" plain @click="deleteHandle(scope.row)">
             删除
           </el-button>
         </template>
@@ -140,7 +141,7 @@
     <el-dialog title="充值" :visible.sync="topUpFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="金额">
-          <el-input-number v-model="temp.topUp" :min="1" ></el-input-number>
+          <el-input-number v-model="temp.topUp" :min="1" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer el-dialog--center">
@@ -152,15 +153,16 @@
     <!--充值界面 end -->
     <!-- 删除弹框 start-->
     <el-dialog
-        title="删除"
-        :visible.sync="deleteDialogVisible"
-        width="30%"
-        center>
-        <span>您正在执行删除数据操作，是否继续?</span>
-        <span slot="footer" class="dialog-footer">
-      <el-button @click="deleteDialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="deleteAction">确 定</el-button>
-    </span>
+      title="删除"
+      :visible.sync="deleteDialogVisible"
+      width="30%"
+      center
+    >
+      <span>您正在执行删除数据操作，是否继续?</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="deleteDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="deleteAction">确 定</el-button>
+      </span>
     </el-dialog>
     <!-- 删除弹框 start-->
     <!--   编辑 start-->
@@ -168,13 +170,15 @@
       title="编辑"
       :visible.sync="editDialogVisible"
       width="30%"
-      center>
+      center
+    >
       <el-form
+        ref="userEditForm"
         :rules="rules"
         :model="temp"
-        ref="userEditForm"
         label-position="left"
-        label-width="70px" >
+        label-width="70px"
+      >
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="temp.phone" />
         </el-form-item>
@@ -200,19 +204,24 @@
       :title="popupTitle"
       :visible.sync="upgradeLevelDialogVisible"
       width="30%"
-      center>
+      center
+    >
       <el-form
+        ref="userEditForm"
         :rules="rules"
         :model="temp"
-        ref="userEditForm"
         label-position="left"
-        label-width="70px" >
+        label-width="70px"
+      >
         <el-form-item label="会员等级">
-          <el-select v-model="temp.user_level_id"
-                     placeholder="选择会员等级"
-                     clearable class="filter-item"
-                     @change="userLevelChange"
-                     style="width: 130px">
+          <el-select
+            v-model="temp.user_level_id"
+            placeholder="选择会员等级"
+            clearable
+            class="filter-item"
+            style="width: 130px"
+            @change="userLevelChange"
+          >
             <el-option v-for="item in userLevelList" :label="item.level_name" :value="item.id" />
           </el-select>
         </el-form-item>
@@ -229,18 +238,23 @@
       title="工会升级"
       :visible.sync="upgradeUnionLevelDialogVisible"
       width="30%"
-      center>
+      center
+    >
       <el-form
+        ref="userEditForm"
         :rules="rules"
         :model="temp"
-        ref="userEditForm"
         label-position="left"
-        label-width="70px" >
+        label-width="70px"
+      >
         <el-form-item label="工会等级">
-          <el-select v-model="temp.union_level_id"
-                     placeholder="选择会员等级"
-                     clearable class="filter-item"
-                     @change=unionLevelChange>
+          <el-select
+            v-model="temp.union_level_id"
+            placeholder="选择会员等级"
+            clearable
+            class="filter-item"
+            @change="unionLevelChange"
+          >
             <el-option v-for="item in uionLevelList" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>

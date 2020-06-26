@@ -54,7 +54,6 @@ export const constantRoutes = [
       meta: { title: '控制面板', icon: 'dashboard' }
     }]
   },
-
   {
     path: '/users',
     component: Layout,
@@ -79,6 +78,27 @@ export const constantRoutes = [
         name: 'organization',
         component: () => import('@/views/users/organization'),
         meta: { title: '工会等级', icon: 'organization' }
+      }
+    ]
+  },
+  {
+    path: '/goods',
+    component: Layout,
+    redirect: '/goods/index',
+    name: 'Example',
+    meta: { title: ' 矿机管理', icon: 'store' },
+    children: [
+      {
+        path: 'index',
+        name: 'goods',
+        component: () => import('@/views/goods/miner'),
+        meta: { title: '矿机列表', icon: 'miner' }
+      },
+      {
+        path: 'test',
+        name: 'test',
+        component: () => import('@/views/goods/miner'),
+        meta: { title: '矿机列表', icon: 'miner' }
       }
     ]
   },
