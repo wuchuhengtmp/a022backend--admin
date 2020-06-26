@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-table
       v-loading="listLoading"
-      :data="userLevelList.items"
+      :data="userLevelList"
       element-loading-text="Loading"
       border
       fit

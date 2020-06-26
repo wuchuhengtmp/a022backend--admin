@@ -75,10 +75,10 @@ export const constantRoutes = [
         meta: { title: '会员列表', icon: 'user' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'organization',
+        name: 'organization',
+        component: () => import('@/views/users/organization'),
+        meta: { title: '工会等级', icon: 'organization' }
       }
     ]
   },

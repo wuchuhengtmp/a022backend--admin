@@ -1,4 +1,4 @@
-import { getUionLevelList }from "@/api/unionLevel";
+import { getUionLevelList, uionLevelUpdate}from "@/api/unionLevel";
 
 const getDefaultState = () => {
   return {
@@ -30,9 +30,15 @@ const actions = {
       })
     })
   },
-  uionLevelUpdate(uionLevelInfo) {
+  // 更新
+  uionLevelUpdate({ commit, state }, uionLevelInfo) {
     return new Promise((resolve, reject) => {
-
+      uionLevelUpdate(uionLevelInfo).then((res) => {
+          const index = state.unionLevelList.findIndex(v => v.id === uionLevelInfo.id )
+          state.unionLevelList[index] = uionLevelInfo
+          commit('SET_UION_LEVEL_LIST', state.unionLevelList)
+          resolve()
+      }).catch(error => { reject(error) })
     })
   }
 }
