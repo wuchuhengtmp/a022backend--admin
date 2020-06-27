@@ -73,9 +73,16 @@
           {{ scope.row.created_at }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="更新时间" width="160">
+      <el-table-column align="center" label="完成时间" width="160">
         <template slot-scope="scope">
           {{ scope.row.updated_at }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作" width="160">
+        <template slot-scope="scope">
+          <el-button type="danger" size="mini" plain @click="open(scope.row)">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -107,7 +114,7 @@ export default {
       queryList: {
         limit: 10,
         page: 1,
-        type: 'beConfirm',
+        type: 'completed',
         username: undefined
       }
     }

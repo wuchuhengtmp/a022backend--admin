@@ -138,7 +138,19 @@ export const constantRoutes = [
         path: 'toBeConfirmedOrder',
         name: 'toBeConfirmedOrder',
         component: () => import('@/views/transation/toBeConfirmedOrder'),
-        meta: { title: '待确认订单', icon: 'confirm' }
+        meta: { title: '待确认订单', icon: 'toBeConfirm' }
+      },
+      {
+        path: 'completedorder',
+        name: 'completedorder',
+        component: () => import('@/views/transation/completedOrder'),
+        meta: { title: '已完成订单', icon: 'complete' }
+      },
+      {
+        path: 'complant',
+        name: 'complaint',
+        component: () => import('@/views/transation/complant'),
+        meta: { title: '申诉订单', icon: 'complaint' }
       }
     ]
   },
