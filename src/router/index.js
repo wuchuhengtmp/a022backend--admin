@@ -126,13 +126,19 @@ export const constantRoutes = [
         path: 'buying',
         name: 'paying',
         component: () => import('@/views/transation/paying'),
-        meta: { title: '求购中订单', icon: 'transation' }
+        meta: { title: '求购订单', icon: 'transation' }
       },
       {
         path: 'pendingPayment',
         name: 'pendingPayment',
         component: () => import('@/views/transation/pendingPayment'),
-        meta: { title: '待付款订单', icon: 'payer' }
+        meta: { title: '买家待付款订单', icon: 'payer' }
+      },
+      {
+        path: 'toBeConfirmedOrder',
+        name: 'toBeConfirmedOrder',
+        component: () => import('@/views/transation/toBeConfirmedOrder'),
+        meta: { title: '待确认订单', icon: 'confirm' }
       }
     ]
   },
