@@ -17,6 +17,7 @@ const getters = {
   transactionPayingOrderList: state => state.transaction.transactionPayingOrderList,
   transactionPayingOrderTotal: state => state.transaction.transactionPayingOrderTotal,
   certificationList: state => state.certification.certificationList,
-  certificationTotal: state => state.certification.certificationTotal
+  certificationTotal: state => state.certification.certificationTotal,
+  noticeList: state => state.notices.noticeList
 }
 export default getters

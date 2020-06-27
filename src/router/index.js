@@ -160,7 +160,21 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/system',
+    name: 'system',
+    component: Layout,
+    meta: { title: '系统设置', icon: 'system' },
+    redirect: '/system/notice',
+    children: [
+      {
+        path: 'notice',
+        name: 'notice',
+        component: () => import('@/views/system/notice'),
+        meta: { title: '公告设置', icon: 'notice' }
+      }
+    ]
+  },
   // {
   //   path: '/form',
   //   component: Layout,
