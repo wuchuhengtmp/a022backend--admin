@@ -9,6 +9,8 @@ const getters = {
   userLevelTotal: state => state.userLevel.userLevelTotal,
   userList: state => state.user.userList,
   userListTotal: state => state.user.userListTotal,
-  uionLevelList: state => state.unionLevel.unionLevelList
+  uionLevelList: state => state.unionLevel.unionLevelList,
+  orderList: state => state.order.orderList,
+  orderTotal: state => state.order.orderTotal
 }
 export default getters

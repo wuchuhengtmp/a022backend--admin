@@ -6,7 +6,8 @@ import settings from './modules/settings'
 import user from './modules/user'
 import goods from './modules/goods'
 import userLevel from './modules/userLevel'
-import unionLevel from "@/store/modules/unionLevel";
+import unionLevel from '@/store/modules/unionLevel'
+import order from '@/store/modules/order'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,8 @@ const store = new Vuex.Store({
     user,
     goods,
     userLevel,
-    unionLevel
+    unionLevel,
+    order
   },
   getters
 })

@@ -85,7 +85,6 @@ export const constantRoutes = [
     path: '/goods',
     component: Layout,
     redirect: '/goods/index',
-    name: 'Example',
     meta: { title: ' 矿机管理', icon: 'store' },
     children: [
       {
@@ -95,10 +94,10 @@ export const constantRoutes = [
         meta: { title: '矿机列表', icon: 'miner' }
       },
       {
-        path: 'test',
-        name: 'test',
-        component: () => import('@/views/goods/miner'),
-        meta: { title: '矿机列表', icon: 'miner' }
+        path: 'orders',
+        name: 'orders',
+        component: () => import('@/views/goods/order'),
+        meta: { title: '已购买列表', icon: 'store' }
       }
     ]
   },
