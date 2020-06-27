@@ -74,6 +74,12 @@ export const constantRoutes = [
         meta: { title: '会员列表', icon: 'user' }
       },
       {
+        path: 'certification',
+        name: 'certification',
+        component: () => import('@/views/users/certification'),
+        meta: { title: '认证审核', icon: 'certification' }
+      },
+      {
         path: 'organization',
         name: 'organization',
         component: () => import('@/views/users/organization'),

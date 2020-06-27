@@ -10,6 +10,7 @@ import unionLevel from '@/store/modules/unionLevel'
 import order from '@/store/modules/order'
 import revenueLogs from '@/store/modules/revenueLogs'
 import transaction from '@/store/modules/transaction'
+import certification from '@/store/modules/certification'
 
 Vue.use(Vuex)
 
@@ -23,7 +24,8 @@ const store = new Vuex.Store({
     unionLevel,
     order,
     revenueLogs,
-    transaction
+    transaction,
+    certification
   },
   getters
 })
