@@ -52,16 +52,16 @@ const actions = {
   },
 
   // get user info
-  getInfo({commit, state}) {
+  getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const {data} = response
+        const { data } = response
 
         if (!data) {
           reject('Verification failed, please Login again.')
         }
 
-        const {username, avator} = data
+        const { username, avator } = data
         commit('SET_NAME', username)
         commit('SET_AVATAR', avator)
         resolve(data)

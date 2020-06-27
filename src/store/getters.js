@@ -11,6 +11,8 @@ const getters = {
   userListTotal: state => state.user.userListTotal,
   uionLevelList: state => state.unionLevel.unionLevelList,
   orderList: state => state.order.orderList,
-  orderTotal: state => state.order.orderTotal
+  orderTotal: state => state.order.orderTotal,
+  revenueLogList: state => state.revenueLogs.revenueLogList,
+  revenueLogTotal: state => state.revenueLogs.revenueLogTotal
 }
 export default getters
