@@ -9,6 +9,7 @@ import userLevel from './modules/userLevel'
 import unionLevel from '@/store/modules/unionLevel'
 import order from '@/store/modules/order'
 import revenueLogs from '@/store/modules/revenueLogs'
+import transaction from '@/store/modules/transaction'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ const store = new Vuex.Store({
     userLevel,
     unionLevel,
     order,
-    revenueLogs
+    revenueLogs,
+    transaction
   },
   getters
 })

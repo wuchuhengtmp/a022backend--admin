@@ -115,6 +115,27 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/transation',
+    name: 'transation',
+    component: Layout,
+    meta: { title: '交易所', icon: 'transation' },
+    redirect: '/transation/paying',
+    children: [
+      {
+        path: 'buying',
+        name: 'paying',
+        component: () => import('@/views/transation/paying'),
+        meta: { title: '求购中订单', icon: 'transation' }
+      },
+      {
+        path: 'paying',
+        name: 'paying',
+        component: () => import('@/views/revenue/logs'),
+        meta: { title: '待付款订单', icon: 'payer' }
+      }
+    ]
+  },
 
   // {
   //   path: '/form',
