@@ -129,9 +129,9 @@ export const constantRoutes = [
         meta: { title: '求购中订单', icon: 'transation' }
       },
       {
-        path: 'paying',
-        name: 'paying',
-        component: () => import('@/views/revenue/logs'),
+        path: 'pendingPayment',
+        name: 'pendingPayment',
+        component: () => import('@/views/transation/pendingPayment'),
         meta: { title: '待付款订单', icon: 'payer' }
       }
     ]
