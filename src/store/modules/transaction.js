@@ -1,9 +1,10 @@
-import { getTranSactionPayingOrderList, deleteAction } from '@/api/transaction'
+import { getTranSactionPayingOrderList, deleteAction, getConfigurationList, configurationUpdate } from '@/api/transaction'
 
 const getDefaultState = () => {
   return {
     transactionPayingOrderList: [],
-    transactionPayingOrderTotal: 0
+    transactionPayingOrderTotal: 0,
+    configurationList: []
   }
 }
 
@@ -18,6 +19,9 @@ const mutations = {
   },
   SET_TRAN_SACTION_PAYING_ORDER_TOTAL: (state, transactionPayingOrderTotal) => {
     state.transactionPayingOrderTotal = transactionPayingOrderTotal
+  },
+  SET_CONFIGURATION_LIST: (state, configurationList) => {
+    state.configurationList = configurationList
   }
 }
 
@@ -40,6 +44,23 @@ const actions = {
         const index = state.transactionPayingOrderList.findIndex(v => v.id === id)
         state.transactionPayingOrderList.splice(index, 1)
         commit('SET_TRAN_SACTION_PAYING_ORDER_LIST', state.transactionPayingOrderList)
+        resolve()
+      })
+    })
+  },
+  getConfigurationList({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getConfigurationList().then(res => {
+        const { data } = res
+        commit('SET_CONFIGURATION_LIST', data)
+        resolve()
+      })
+    })
+  },
+  configurationUpdate({ commit, sate }, queryList) {
+    return new Promise((resolve, reject) => {
+      configurationUpdate(queryList).then(res => {
+        commit('SET_CONFIGURATION_LIST', queryList)
         resolve()
       })
     })

@@ -13,3 +13,22 @@ export function deleteAction(id) {
     method: 'delete'
   })
 }
+
+/**
+ * 交易配置
+ */
+export function getConfigurationList() {
+  return request({
+    url: 'transations/configurations',
+    method: 'get'
+  })
+}
+
+// 更新
+export function configurationUpdate(queryList) {
+  const data = JSON.stringify(queryList)
+  return request({
+    url: `transations/configurations?${qs.stringify(queryList)}`,
+    method: 'put'
+  })
+}

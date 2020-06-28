@@ -172,6 +172,12 @@ export const constantRoutes = [
         name: 'notice',
         component: () => import('@/views/system/notice'),
         meta: { title: '公告设置', icon: 'notice' }
+      },
+      {
+        path: 'transaction',
+        name: 'transaction',
+        component: () => import('@/views/system/transaction'),
+        meta: { title: '交易设置', icon: 'transation' }
       }
     ]
   },
