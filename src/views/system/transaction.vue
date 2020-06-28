@@ -6,8 +6,9 @@
       </div>
       <el-form ref="dataForm" label-position="left" label-width="200px" style="max-width: 600px">
         <el-form-item v-for="item in temp" v-show="!dataIsLoading" :key="item.index" :label="item.note">
-          <el-input-number v-model="item.val" :min="-100" :max="100"  v-if="item.id === 4"/>
-          <el-input-number v-model="item.val" :min="0" :max="100"  v-if="item.id === 6 "/>
+          <el-input-number v-if="item.id === 4" v-model="item.val" :min="-100" :max="100" />
+          <el-input-number v-if="item.id === 6 " v-model="item.val" :min="0" :max="100" />
+          <el-input-number v-if="item.id === 20 " v-model="item.val" :min="0" :max="100" />
         </el-form-item>
         <el-row>
           <div class="dialog-footer el-dialog--center">

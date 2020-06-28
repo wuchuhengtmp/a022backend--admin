@@ -161,6 +161,27 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/phone',
+    name: 'phone',
+    component: Layout,
+    meta: { title: '充值', icon: 'phone' },
+    redirect: '/phone/goods',
+    children: [
+      {
+        path: 'notice',
+        name: 'notice',
+        component: () => import('@/views/phone/goods'),
+        meta: { title: '手机充值', icon: 'phone' }
+      },
+      {
+        path: 'order',
+        name: 'order',
+        component: () => import('@/views/phone/orders'),
+        meta: { title: '充值订单', icon: 'order' }
+      }
+    ]
+  },
+  {
     path: '/system',
     name: 'system',
     component: Layout,
@@ -193,6 +214,8 @@ export const constantRoutes = [
       }
     ]
   },
+
+
   // {
   //   path: '/form',
   //   component: Layout,

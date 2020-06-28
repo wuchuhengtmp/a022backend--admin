@@ -48,6 +48,11 @@
           {{ scope.row.total }}
         </template>
       </el-table-column>
+      <el-table-column align="center" label="分红" width="95">
+        <template slot-scope="scope">
+          {{ scope.row.bonus }} %
+        </template>
+      </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">
@@ -77,6 +82,9 @@
         </el-form-item>
         <el-form-item label="活跃度">
           <el-input-number v-model="temp.actives" :min="0" ></el-input-number>
+        </el-form-item>
+        <el-form-item label="分红">
+          <el-input-number v-model="temp.bonus" :min="0" ></el-input-number>
         </el-form-item>
         <el-form-item label="奖励商品">
           <el-select v-model="temp.reward_goods_id"
@@ -133,7 +141,8 @@ export default {
         name:"一级会长",
         reward_goods_id:1,
         total:1,
-        user_level_id:1
+        user_level_id:1,
+        bonus: undefined
       }
     }
   },

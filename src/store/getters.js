@@ -22,6 +22,7 @@ const getters = {
   configurationList: state => state.transaction.configurationList,
   dashboard: state => state.dashboard.dashboard,
   ruleList: state => state.rules.ruleList,
-  signConfig: state => state.sign.signConfig
+  signConfig: state => state.sign.signConfig,
+  rechargeCardList: state => state.rechargeCards.rechargeCardList
 }
 export default getters
