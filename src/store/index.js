@@ -12,6 +12,7 @@ import revenueLogs from '@/store/modules/revenueLogs'
 import transaction from '@/store/modules/transaction'
 import certification from '@/store/modules/certification'
 import notices from '@/store/modules/notices'
+import dashboard from '@/store/modules/dashboard'
 
 Vue.use(Vuex)
 
@@ -27,7 +28,8 @@ const store = new Vuex.Store({
     revenueLogs,
     transaction,
     certification,
-    notices
+    notices,
+    dashboard
   },
   getters
 })
