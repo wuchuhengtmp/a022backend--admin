@@ -20,6 +20,7 @@ const getters = {
   certificationTotal: state => state.certification.certificationTotal,
   noticeList: state => state.notices.noticeList,
   configurationList: state => state.transaction.configurationList,
-  dashboard: state => state.dashboard.dashboard
+  dashboard: state => state.dashboard.dashboard,
+  ruleList: state => state.rules.ruleList
 }
 export default getters

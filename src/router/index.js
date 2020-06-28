@@ -178,6 +178,12 @@ export const constantRoutes = [
         name: 'transaction',
         component: () => import('@/views/system/transaction'),
         meta: { title: '交易设置', icon: 'transation' }
+      },
+      {
+        path: 'rules',
+        name: 'rules',
+        component: () => import('@/views/system/rules'),
+        meta: { title: '规则说明设置', icon: 'rules' }
       }
     ]
   },
