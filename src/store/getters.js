@@ -21,6 +21,7 @@ const getters = {
   noticeList: state => state.notices.noticeList,
   configurationList: state => state.transaction.configurationList,
   dashboard: state => state.dashboard.dashboard,
-  ruleList: state => state.rules.ruleList
+  ruleList: state => state.rules.ruleList,
+  signConfig: state => state.sign.signConfig
 }
 export default getters

@@ -14,6 +14,7 @@ import certification from '@/store/modules/certification'
 import notices from '@/store/modules/notices'
 import dashboard from '@/store/modules/dashboard'
 import rules from '@/store/modules/rules'
+import sign from '@/store/modules/sign'
 
 Vue.use(Vuex)
 
@@ -31,7 +32,8 @@ const store = new Vuex.Store({
     certification,
     notices,
     dashboard,
-    rules
+    rules,
+    sign
   },
   getters
 })

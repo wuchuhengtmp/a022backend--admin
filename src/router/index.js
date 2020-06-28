@@ -184,6 +184,12 @@ export const constantRoutes = [
         name: 'rules',
         component: () => import('@/views/system/rules'),
         meta: { title: '规则说明设置', icon: 'rules' }
+      },
+      {
+        path: 'sign',
+        name: 'sign',
+        component: () => import('@/views/system/sign'),
+        meta: { title: '签到设置', icon: 'sign' }
       }
     ]
   },
