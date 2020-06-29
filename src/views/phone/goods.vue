@@ -15,6 +15,11 @@
               {{ scope.row.id }}
             </template>
           </el-table-column>
+          <el-table-column align="center" label="标题" width="95">
+            <template slot-scope="scope">
+              {{ scope.row.title }}
+            </template>
+          </el-table-column>
           <el-table-column align="center" label="价格" width="95">
             <template slot-scope="scope">
               {{ scope.row.price }}

@@ -16,6 +16,7 @@ import dashboard from '@/store/modules/dashboard'
 import rules from '@/store/modules/rules'
 import sign from '@/store/modules/sign'
 import rechargeCards from '@/store/modules/rechargeCards'
+import rechargeCardOrders from '@/store/modules/rechargeCardOrders'
 
 Vue.use(Vuex)
 
@@ -35,7 +36,8 @@ const store = new Vuex.Store({
     dashboard,
     rules,
     sign,
-    rechargeCards
+    rechargeCards,
+    rechargeCardOrders
   },
   getters
 })
