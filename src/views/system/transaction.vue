@@ -9,6 +9,7 @@
           <el-input-number v-if="item.id === 4" v-model="item.val" :min="-100" :max="100" />
           <el-input-number v-if="item.id === 6 " v-model="item.val" :min="0" :max="100" />
           <el-input-number v-if="item.id === 20 " v-model="item.val" :min="0" :max="100" />
+          <el-input-number v-if="item.id === 18 " v-model="item.val" :min="0" :max="100" />
         </el-form-item>
         <el-row>
           <div class="dialog-footer el-dialog--center">

@@ -1,5 +1,3 @@
-import rechargeCardOrders from '@/store/modules/rechargeCardOrders'
-
 const getters = {
   sidebar: state => state.app.sidebar,
   device: state => state.app.device,
@@ -26,6 +24,9 @@ const getters = {
   ruleList: state => state.rules.ruleList,
   signConfig: state => state.sign.signConfig,
   rechargeCardList: state => state.rechargeCards.rechargeCardList,
-  rechargeCardOrderList: state => state.rechargeCardOrders.rechargeCardOrderList
+  rechargeCardOrderList: state => state.rechargeCardOrders.rechargeCardOrderList,
+  customerList: state => state.customer.customerList,
+  feedbackList: state => state.feedback.feedbackList,
+  feedbackTotal: state => state.feedback.feedbackTotal
 }
 export default getters

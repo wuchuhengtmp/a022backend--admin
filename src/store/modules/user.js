@@ -37,11 +37,11 @@ const mutations = {
 
 const actions = {
   // user login
-  login({commit}, userInfo) {
-    const {username, password} = userInfo
+  login({ commit }, userInfo) {
+    const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({username: username.trim(), password: password}).then(response => {
-        const {data} = response
+      login({ username: username.trim(), password: password }).then(response => {
+        const { data } = response
         commit('SET_TOKEN', data.access_token)
         setToken(data.access_token)
         resolve()
@@ -72,21 +72,17 @@ const actions = {
   },
 
   // user logout
-  logout({commit, state}) {
+  logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      removeToken() // must remove  token  first
+      resetRouter()
+      commit('RESET_STATE')
+      resolve()
     })
   },
 
   // remove token
-  resetToken({commit}) {
+  resetToken({ commit }) {
     return new Promise(resolve => {
       removeToken() // must remove  token  first
       commit('RESET_STATE')
@@ -95,10 +91,10 @@ const actions = {
   },
 
   //  用户列表
-  getUserList({commit, state}, query) {
+  getUserList({ commit, state }, query) {
     return new Promise((resolve, reject) => {
       getUserList(query).then((res) => {
-        const {data, msg, code} = res
+        const { data, msg, code } = res
         commit('SET_USER_LIST', data.items)
         commit('SET_USER_LIST_TOTAL', data.total)
         resolve()
@@ -109,11 +105,11 @@ const actions = {
   },
 
   // 用户充值
-  topUp({commit, state}, topUpInfo) {
+  topUp({ commit, state }, topUpInfo) {
     return new Promise((resolve, reject) => {
       topUp(topUpInfo).then(res => {
         const index = state.userList.findIndex(v => v.id === topUpInfo.id)
-        const userList = state.userList;
+        const userList = state.userList
         userList[index].coint += topUpInfo.topUp
         commit('SET_USER_LIST', userList)
         resolve()
@@ -124,7 +120,7 @@ const actions = {
   },
 
   // 删除
-  delete({commit, state}, id) {
+  delete({ commit, state }, id) {
     return new Promise((resolve, reject) => {
       deleteRequest(id).then(res => {
         const index = state.userList.findIndex(v => v.id === id)
@@ -137,17 +133,18 @@ const actions = {
     })
   },
   // 编辑
-  update({commit, state}, userInfo) {
+  update({ commit, state }, userInfo) {
     return new Promise((resolve, reject) => {
       update(userInfo).then(res => {
-        const {data} = res
+        const { data } = res
         const index = state.userList.findIndex(value => value.id === userInfo.id)
         state.userList[index].phone = userInfo.phone
         state.userList[index].alipay = userInfo.alipay
         state.userList[index].credi = userInfo.credit
         state.userList[index].address = userInfo.address
+        state.userList[index].is_intercept = userInfo.is_intercept
         resolve()
-      }).catch(error=> {
+      }).catch(error => {
         reject(error)
       })
     })
@@ -166,8 +163,8 @@ const actions = {
   updateUserLevel({ commit, state }, userInfo) {
     const index = state.userList.findIndex(v => v.id === userInfo.id)
     state.userList[index]['userlevel'] = userInfo.levelName
-    state.userList[index]['user_level_id'] = userInfo. userLevelId
-    commit('SET_USER_LIST', state.userList);
+    state.userList[index]['user_level_id'] = userInfo.userLevelId
+    commit('SET_USER_LIST', state.userList)
   },
   // 用户工会等级长级
   uionLevelUpgrade({ commit, state }, unionLevelInfo) {

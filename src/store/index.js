@@ -17,6 +17,8 @@ import rules from '@/store/modules/rules'
 import sign from '@/store/modules/sign'
 import rechargeCards from '@/store/modules/rechargeCards'
 import rechargeCardOrders from '@/store/modules/rechargeCardOrders'
+import customer from '@/store/modules/customer'
+import feedback from '@/store/modules/feedback'
 
 Vue.use(Vuex)
 
@@ -37,7 +39,9 @@ const store = new Vuex.Store({
     rules,
     sign,
     rechargeCards,
-    rechargeCardOrders
+    rechargeCardOrders,
+    customer,
+    feedback
   },
   getters
 })

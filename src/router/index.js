@@ -211,11 +211,29 @@ export const constantRoutes = [
         name: 'sign',
         component: () => import('@/views/system/sign'),
         meta: { title: '签到设置', icon: 'sign' }
+      },
+      {
+        path: 'customer',
+        name: 'customer',
+        component: () => import('@/views/system/customer'),
+        meta: { title: '客服设置', icon: 'customer' }
       }
     ]
   },
-
-
+  {
+    path: '/feedback',
+    component: Layout,
+    redirect: '/feedback/index',
+    meta: { title: '反馈列表', icon: 'feedback' },
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/feedback'),
+        meta: { title: '反馈列表', icon: 'feedback' }
+      }
+    ]
+  },
   // {
   //   path: '/form',
   //   component: Layout,

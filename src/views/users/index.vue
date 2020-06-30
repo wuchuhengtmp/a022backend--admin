@@ -55,7 +55,7 @@
           {{ scope.row.alipay }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="实名状态" width="100">
+      <el-table-column align="center" label="实名状态" width="80">
         <template slot-scope="scope">
           {{ scope.row.certification_msg }}
         </template>
@@ -65,14 +65,19 @@
           {{ scope.row.credit }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用户等级" width="100">
+      <el-table-column align="center" label="用户等级" width="80">
         <template slot-scope="scope">
           {{ scope.row.userlevel }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="公会等级" width="100">
+      <el-table-column align="center" label="公会等级" width="80">
         <template slot-scope="scope">
           {{ scope.row.union_level }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="算力拦截" width="80">
+        <template slot-scope="scope">
+          {{ scope.row.is_intercept | interceptFilter }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="创建时间" width="160">
@@ -191,6 +196,13 @@
         <el-form-item label="地址">
           <el-input v-model="temp.address" />
         </el-form-item>
+        <el-form-item label="算力拦截">
+          <el-switch
+            v-model="temp.is_intercept"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer el-dialog--center">
         <el-button type="primary" @click="edit">
@@ -274,6 +286,15 @@ import {mapGetters} from "vuex"
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
+  filters: {
+    interceptFilter: function (val) {
+      if (val === 1) {
+        return '是'
+      }else if (val === 0) {
+        return '否'
+      }
+    }
+  },
   components: { Pagination },
   created() {
     this.getList()
@@ -318,11 +339,13 @@ export default {
         union_level_id: undefined,
         user_level_id: undefined,
         username: undefined,
-        virtual_purse: undefined
+        virtual_purse: undefined,
+        is_intercept: undefined
       },
       rules: {
         phone: [{ trigger: 'change', validator: checkPhone }]
-      }
+      },
+      is_intercept: false
     }
   },
   computed: {
@@ -384,13 +407,15 @@ export default {
     },
     editHandle(row) {
       this.temp = row
+      this.temp.is_intercept = row.is_intercept === 1 ? true : false
       this.editDialogVisible = true
     },
     edit() {
       this.$refs.userEditForm.validate(valid => {
         if (valid) {
-          const { id, username, phone, alipay, credit, address } = this.temp
-          this.$store.dispatch('user/update', { id, username, phone, alipay, credit, address }).then(() => {
+          let { id, username, phone, alipay, credit, address, is_intercept } = this.temp
+          is_intercept = is_intercept ? 1 : 0
+          this.$store.dispatch('user/update', { id, username, phone, alipay, credit, address, is_intercept }).then(() => {
             this.editDialogVisible = false
             this.$notify({
               title: '成功',
